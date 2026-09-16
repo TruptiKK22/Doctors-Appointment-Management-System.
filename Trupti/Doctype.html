@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Specialists</title>
+
+    <style>
+        body {
+            margin: 20px;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+
+            /* Background Image */
+            background-image: url("assets/doctype.jpeg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            padding: 10px 17px;
+            border: none;
+            border-radius: 5px;
+            background-color: lightslategrey;
+            font-size: 1re m;
+        }
+
+        .back-btn:hover {
+            background-color: #ddd;
+        }
+
+        /* Overlay box for content */
+        .content {
+            background-color: transparent;
+            padding: 30px;
+            margin-top: 50px;
+            border-radius: 12px;
+            width: 400px;
+            text-align: center;
+        
+        transform: translateX(-400px); /* LEFT SHIFT */
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .doctor-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #3c8ec1;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .doctor-btn:hover {
+            background-color: #005fa3;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Back Button -->
+<button class="back-btn" onclick="goBack()">← Back</button>
+
+<div class="content">
+    <h2>Select Doctor Specialist</h2>
+
+    <button class="doctor-btn" onclick="openPage('cardiologist.html')">
+        Cardiologist - Heart Specialist
+    </button>
+
+    <button class="doctor-btn" onclick="openPage('gynecologist.html')">
+        Gynecologist - Womens Specialist
+    </button>
+
+    <button class="doctor-btn" onclick="openPage('ent.html')">
+        ENT - Ear, Nose, Throat Specialist
+    </button>
+
+    <button class="doctor-btn" onclick="openPage('orthopedic.html')">
+        Orthopedic - Bones Specialist
+    </button>
+</div>
+
+<script>
+    function openPage(page) {
+        window.location.href = page;
+    }
+
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
+</body>
+</html>

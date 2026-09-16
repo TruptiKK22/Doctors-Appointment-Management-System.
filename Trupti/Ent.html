@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENT - Health Prime</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0; padding: 0;
+            background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.8)),
+                url('assets/doctype.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            color: #ffffff;
+        }
+        .back-btn {
+            position: absolute; top: 25px; left: 25px;
+            padding: 10px 17px; border: none; border-radius: 5px;
+            background-color: lightslategrey; font-size: 1rem; cursor: pointer; color: white;
+        }
+        .back-btn:hover { background-color: #ddd; color: #222; }
+        .header-section { padding: 35px 0 10px 0; text-align: center; }
+        h1 { font-size: 2.8rem; font-family: 'Times New Roman', Times, serif; text-transform: uppercase; letter-spacing: 4px; color: #00d4ff; margin: 0; }
+        .content-wrapper { display: flex; justify-content: flex-start; padding: 40px 0 100px 5%; }
+        .doctor-list { display: flex; flex-direction: column; gap: 25px; width: 100%; max-width: 1000px; }
+        .doctor-btn {
+            display: flex; align-items: center;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(0,212,255,0.3);
+            border-radius: 4px; padding: 0; overflow: hidden;
+            transition: all 0.3s ease; cursor: pointer;
+            width: 100%; text-align: left; color: inherit; font-family: inherit; outline: none;
+        }
+        .doctor-btn:hover { background: rgba(0,212,255,0.1); border-color: #00d4ff; box-shadow: 0 0 20px rgba(0,212,255,0.2); transform: translateX(10px); }
+        .doctor-btn:active { transform: scale(0.98) translateX(5px); background: rgba(0,212,255,0.2); }
+        .doc-pic { width: 180px; height: 180px; background: #1a2a3a; flex-shrink: 0; }
+        .doc-pic img { width: 100%; height: 100%; object-fit: cover; border-right: 2px solid #00d4ff; display: block; }
+        .doc-info { padding: 20px 30px; flex-grow: 1; }
+        .doc-info h2 { margin: 0 0 12px 0; font-size: 1.6rem; color: #00d4ff; }
+        .doc-info p { margin: 6px 0; font-size: 1rem; color: #e0e0e0; display: flex; }
+        .label { font-weight: bold; width: 100px; color: #ffffff; flex-shrink: 0; }
+        @media (max-width: 850px) {
+            .content-wrapper { justify-content: center; padding: 20px; }
+            .doctor-btn { flex-direction: column; }
+            .doc-pic { width: 100%; height: 200px; }
+            .doc-pic img { border-right: none; border-bottom: 2px solid #00d4ff; }
+        }
+    </style>
+</head>
+<body>
+
+<button class="back-btn" onclick="goBack()">← Back</button>
+
+<div class="header-section">
+    <h1>ENT — Ear, Nose & Throat</h1>
+</div>
+
+<div class="content-wrapper">
+    <div class="doctor-list">
+
+        <button class="doctor-btn" onclick="selectDoctor('Dr. Vikram Tiwari')">
+            <div class="doc-pic"><img src="assets/doc9.jpg" alt="Doctor Photo"></div>
+            <div class="doc-info">
+                <h2>Dr. Vikram Tiwari</h2>
+                <p><span class="label">Address:</span><b>ENT Care Plus Hospital,</b> Lajpat Nagar, New Delhi – 110024</p>
+                <p><span class="label">Contact:</span> +91 95890 12347</p>
+            </div>
+        </button>
+
+        <button class="doctor-btn" onclick="selectDoctor('Dr. Bhavna Verma')">
+            <div class="doc-pic"><img src="assets/doc10.jpg" alt="Doctor Photo"></div>
+            <div class="doc-info">
+                <h2>Dr. Bhavna Verma</h2>
+                <p><span class="label">Address:</span><b>Good Care Hospital,</b> Yelahanka, Bangalore, Karnataka – 560064</p>
+                <p><span class="label">Contact:</span> +91 96345 67892</p>
+            </div>
+        </button>
+
+        <button class="doctor-btn" onclick="selectDoctor('Dr. Alisha George')">
+            <div class="doc-pic"><img src="assets/doc11.jpeg" alt="Doctor Photo"></div>
+            <div class="doc-info">
+                <h2>Dr. Alisha George</h2>
+                <p><span class="label">Address:</span><b>CareFirst Hospital,</b> 4, Dwaraka Nagar, Visakhapatnam, Andhra Pradesh – 530016</p>
+                <p><span class="label">Contact:</span> +91 98901 23009</p>
+            </div>
+        </button>
+
+        <button class="doctor-btn" onclick="selectDoctor('Dr. Deepak Yadav')">
+            <div class="doc-pic"><img src="assets/doc12.jpg" alt="Doctor Photo"></div>
+            <div class="doc-info">
+                <h2>Dr. Deepak Yadav</h2>
+                <p><span class="label">Address:</span><b>ENT Trust Hospital,</b> Airoli, Navi Mumbai, Maharashtra – 400708</p>
+                <p><span class="label">Contact:</span> +91 96456 78903</p>
+            </div>
+        </button>
+
+    </div>
+</div>
+
+<script>
+    function selectDoctor(doctorName) {
+        const formUrl = 'ENTForm.php?specialist=ENT&doctor=' + encodeURIComponent(doctorName);
+        window.location.href = 'logout.php?redirect=' + encodeURIComponent(formUrl);
+    }
+    function goBack() { window.history.back(); }
+</script>
+
+</body>
+</html>

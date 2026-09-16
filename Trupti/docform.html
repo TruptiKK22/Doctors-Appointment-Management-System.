@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Patient Registration Form</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:    #0d2137;
+    --teal:    #1a7f74;
+    --teal-lt: #e6f4f2;
+    --teal-md: #2da89a;
+    --cream:   #f6f8fb;
+    --white:   #ffffff;
+    --border:  #d4e2e0;
+    --text:    #0d2137;
+    --muted:   #6b8899;
+    --red:     #c0392b;
+    --shadow:  0 4px 24px rgba(13,33,55,0.10);
+  }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--cream);
+    min-height: 100vh;
+    display: flex; justify-content: center; align-items: flex-start;
+    padding: 48px 16px 72px;
+    background-image:
+      radial-gradient(ellipse 70% 40% at 80% 0%, rgba(26,127,116,0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 35% at 5% 100%, rgba(13,33,55,0.06) 0%, transparent 60%);
+  }
+
+  .page { width: 100%; max-width: 680px; }
+
+  /* HERO */
+  .hero { display: flex; align-items: center; gap: 18px; margin-bottom: 32px; animation: rise 0.55s ease both; }
+  .back-btn-hero {
+    display: inline-flex; align-items: center; gap: 7px; flex-shrink: 0;
+    padding: 8px 16px 8px 10px; background: var(--white);
+    border: 1.5px solid var(--border); border-radius: 50px; cursor: pointer;
+    font-family: 'Nunito', sans-serif; font-size: 0.83rem; font-weight: 600; color: var(--muted);
+    text-decoration: none; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(13,33,55,0.06);
+  }
+  .back-btn-hero svg { width: 18px; height: 18px; fill: none; stroke: var(--muted); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.2s, transform 0.2s; }
+  .back-btn-hero:hover { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .back-btn-hero:hover svg { stroke: #fff; transform: translateX(-3px); }
+
+  .hero-badge { width: 58px; height: 58px; flex-shrink: 0; background: var(--navy); border-radius: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(13,33,55,0.25); position: relative; overflow: hidden; }
+  .hero-badge::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(45,168,154,0.4) 0%, transparent 60%); }
+  .hero-badge svg { width: 28px; height: 28px; fill: #fff; position: relative; z-index: 1; }
+  .hero-text h1 { font-family: 'Playfair Display', serif; font-size: 1.85rem; font-weight: 600; color: var(--navy); line-height: 1.15; }
+  .hero-text span { font-size: 0.82rem; font-weight: 400; color: var(--muted); letter-spacing: 0.3px; }
+
+  /* CARD */
+  .card { background: var(--white); border-radius: 24px; padding: 40px 44px; box-shadow: var(--shadow); border: 1px solid rgba(212,226,224,0.6); animation: rise 0.55s 0.08s ease both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* SECTIONS */
+  .section + .section { margin-top: 34px; }
+  .sec-head { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+  .sec-num { width: 26px; height: 26px; flex-shrink: 0; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; color: #fff; }
+  .sec-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 500; color: var(--navy); }
+  .sec-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
+
+  /* GRID / FIELDS */
+  .grid { display: grid; gap: 18px; }
+  .g2   { grid-template-columns: 1fr 1fr; }
+  .full { grid-column: 1 / -1; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  label.lbl { font-size: 0.79rem; font-weight: 600; color: var(--navy); letter-spacing: 0.3px; text-transform: uppercase; }
+  label.lbl .req { color: var(--teal); margin-left: 2px; }
+
+  input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="date"], textarea, select {
+    width: 100%; padding: 11px 15px; border: 1.5px solid var(--border); border-radius: 11px;
+    background: var(--cream); font-family: 'Nunito', sans-serif; font-size: 0.9rem; font-weight: 500;
+    color: var(--text); outline: none; transition: border-color 0.2s, box-shadow 0.2s, background 0.2s; appearance: none;
+  }
+  input[type="number"] { -moz-appearance: textfield; }
+  input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+  input:focus, select:focus, textarea:focus { border-color: var(--teal-md); background: #fff; box-shadow: 0 0 0 3.5px rgba(45,168,154,0.13); }
+  .err-field { border-color: var(--red) !important; box-shadow: 0 0 0 3px rgba(192,57,43,0.10) !important; }
+  input::placeholder, textarea::placeholder { color: #aac2be; font-weight: 400; }
+  textarea { resize: vertical; min-height: 82px; line-height: 1.6; }
+
+  .sel-wrap { position: relative; }
+  .sel-wrap::after { content: ''; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid var(--muted); pointer-events: none; }
+  .sel-wrap select { padding-right: 38px; cursor: pointer; }
+
+  .hint { font-size: 0.73rem; color: var(--muted); }
+  .err-msg { font-size: 0.73rem; color: var(--red); display: none; }
+
+  /* RADIO PILLS */
+  .pill-group { display: flex; flex-wrap: wrap; gap: 12px; }
+  .pill { position: relative; }
+  .pill input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .pill label { display: flex; align-items: center; gap: 9px; padding: 10px 22px; border: 1.5px solid var(--border); border-radius: 50px; cursor: pointer; font-size: 0.9rem; font-weight: 600; color: var(--muted); background: var(--cream); transition: all 0.18s; user-select: none; }
+  .pill label .dot { width: 13px; height: 13px; border-radius: 50%; border: 2px solid var(--border); background: #fff; flex-shrink: 0; transition: all 0.18s; }
+  .pill input:checked ~ label { border-color: var(--teal); background: var(--teal-lt); color: var(--teal); }
+  .pill input:checked ~ label .dot { border-color: var(--teal); background: var(--teal); box-shadow: inset 0 0 0 2.5px #fff; }
+  .pill label:hover { border-color: var(--teal-md); color: var(--teal); }
+
+  /* BEDREST TOGGLE */
+  .toggle-pair { display: flex; gap: 12px; flex-wrap: wrap; }
+  .tog { position: relative; flex: 1; min-width: 140px; }
+  .tog input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .tog label { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px 12px; border: 1.5px solid var(--border); border-radius: 14px; cursor: pointer; font-size: 0.87rem; font-weight: 600; color: var(--muted); background: var(--cream); transition: all 0.2s; text-align: center; gap: 6px; user-select: none; }
+  .tog label .tog-icon { font-size: 1.6rem; line-height: 1; }
+  .tog label .tog-sub { font-size: 0.72rem; font-weight: 400; color: #9db5b2; margin-top: 2px; }
+  .tog input:checked ~ label { border-color: var(--teal); background: var(--teal-lt); color: var(--teal); box-shadow: 0 0 0 3px rgba(26,127,116,0.10); }
+  .tog input:checked ~ label .tog-sub { color: var(--teal-md); }
+  .tog label:hover { border-color: var(--teal-md); }
+
+  /* TOKEN SYSTEM */
+  .token-wrap { display: flex; flex-direction: column; gap: 16px; }
+  .appt-date-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .token-card {
+    background: var(--navy); border-radius: 18px; padding: 20px 22px;
+    display: flex; align-items: flex-start; gap: 18px;
+    position: relative; overflow: hidden;
+    transition: opacity 0.35s;
+  }
+  .token-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(45,168,154,0.32) 0%, transparent 55%); }
+  .token-card.inactive { opacity: 0.4; pointer-events: none; }
+
+  .token-badge {
+    width: 72px; height: 72px; flex-shrink: 0;
+    background: rgba(255,255,255,0.07); border: 2px solid rgba(45,168,154,0.4); border-radius: 16px;
+    display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1px;
+    position: relative; z-index: 1;
+  }
+  .token-number {
+    font-family: 'Playfair Display', serif; font-size: 2.1rem; font-weight: 600; color: #fff; line-height: 1;
+    transition: opacity 0.25s;
+  }
+  .token-number.fading { opacity: 0.2; }
+  .token-label-sm { font-size: 0.58rem; font-weight: 700; letter-spacing: 1.1px; color: rgba(255,255,255,0.4); text-transform: uppercase; }
+
+  .token-meta { position: relative; z-index: 1; flex: 1; min-width: 0; }
+  .tm-row { font-size: 0.66rem; font-weight: 700; letter-spacing: 1px; color: rgba(255,255,255,0.4); text-transform: uppercase; margin-bottom: 3px; }
+  .tm-val { font-size: 0.92rem; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
+  .tm-sub { font-size: 0.71rem; color: rgba(255,255,255,0.38); }
+
+  .token-status { display: flex; align-items: center; gap: 7px; margin-top: 9px; font-size: 0.74rem; font-weight: 700; }
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; animation: blink 1.8s ease-in-out infinite; }
+  @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.65)} }
+  .s-ok    .status-dot { background: #2ecc71; }
+  .s-ok    { color: #2ecc71; }
+  .s-warn  .status-dot { background: #f39c12; animation: none; }
+  .s-warn  { color: #f39c12; }
+  .s-taken .status-dot { background: #e74c3c; animation: none; }
+  .s-taken { color: #ff8070; }
+  .s-idle  .status-dot { background: rgba(255,255,255,0.3); animation: none; }
+  .s-idle  { color: rgba(255,255,255,0.35); }
+
+  .taken-warn {
+    display: none; margin-top: 9px;
+    background: rgba(231,76,60,0.14); border: 1px solid rgba(231,76,60,0.35);
+    border-radius: 8px; padding: 8px 12px;
+    font-size: 0.73rem; font-weight: 600; color: #ff8070;
+    position: relative; z-index: 1;
+  }
+
+  /* Reset bar */
+  .reset-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--teal-lt); border: 1.5px solid rgba(26,127,116,0.20);
+    border-radius: 12px; padding: 11px 16px;
+  }
+  .reset-bar-left { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; font-weight: 700; color: var(--teal); }
+  .reset-bar-left svg { width: 15px; height: 15px; fill: var(--teal-md); flex-shrink: 0; }
+  .reset-bar-right { font-size: 0.72rem; font-weight: 600; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+  #countdown-timer { font-variant-numeric: tabular-nums; color: var(--navy); font-weight: 700; }
+
+  /* SUBMIT */
+  .divider { height: 1px; background: var(--border); margin: 32px 0 28px; }
+  .submit-btn {
+    width: 100%; padding: 15px; background: var(--navy); color: #fff;
+    font-family: 'Nunito', sans-serif; font-size: 0.96rem; font-weight: 700; letter-spacing: 0.6px;
+    border: none; border-radius: 13px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 6px 20px rgba(13,33,55,0.25); position: relative; overflow: hidden;
+  }
+  .submit-btn::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(45,168,154,0.28) 0%, transparent 60%); }
+  .submit-btn span, .submit-btn svg { position: relative; z-index: 1; }
+  .submit-btn svg { width: 19px; height: 19px; fill: #fff; }
+  .submit-btn:hover { background: #162f47; box-shadow: 0 8px 28px rgba(13,33,55,0.35); transform: translateY(-1px); }
+  .submit-btn:active { transform: translateY(0); }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(60px);
+    background: var(--navy); color: #fff; padding: 13px 28px; border-radius: 50px;
+    font-family: 'Nunito', sans-serif; font-size: 0.88rem; font-weight: 600;
+    box-shadow: 0 10px 32px rgba(0,0,0,0.22); opacity: 0; transition: all 0.4s cubic-bezier(.22,1,.36,1);
+    white-space: nowrap; z-index: 9999; display: flex; align-items: center; gap: 10px;
+    border: 1px solid rgba(45,168,154,0.4);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast svg { width: 17px; height: 17px; fill: var(--teal-md); }
+
+  /* RESPONSIVE */
+  @media (max-width: 540px) {
+    .card { padding: 28px 20px; }
+    .g2, .appt-date-grid { grid-template-columns: 1fr; }
+    .hero-text h1 { font-size: 1.45rem; }
+    .toggle-pair { flex-direction: column; }
+    .tog { min-width: unset; }
+    .token-card { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <a href="#" class="back-btn-hero" onclick="history.back(); return false;">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </a>
+    <div class="hero-badge">
+      <svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-7 14a1 1 0 0 1-1-1v-3H8a1 1 0 0 1 0-2h3V8a1 1 0 0 1 2 0v3h3a1 1 0 0 1 0 2h-3v3a1 1 0 0 1-1 1z"/></svg>
+    </div>
+    <div class="hero-text">
+      <h1>Patient Registration</h1>
+      <span>Please complete all fields carefully before submitting.</span>
+    </div>
+  </div>
+
+  <div class="card">
+  <form id="pForm" novalidate>
+
+    <!-- 1: Personal Information -->
+    <div class="section">
+      <div class="sec-head">
+        <div class="sec-num">1</div>
+        <div class="sec-title">Personal Information</div>
+        <div class="sec-line"></div>
+      </div>
+      <div class="grid g2">
+
+        <div class="field full">
+          <label class="lbl" for="fullname">Patient Full Name <span class="req">*</span></label>
+          <input type="text" id="fullname" placeholder="Enter full name" required/>
+          <span class="err-msg" id="e-name">Full name is required.</span>
+        </div>
+
+        <div class="field">
+          <label class="lbl" for="age">Age <span class="req">*</span></label>
+          <input type="number" id="age" placeholder="e.g. 28" min="0" max="130" required/>
+          <span class="err-msg" id="e-age">Enter a valid age (0–130).</span>
+        </div>
+
+        <div class="field">
+          <label class="lbl" for="gender">Gender <span class="req">*</span></label>
+          <div class="sel-wrap">
+            <select id="gender" required>
+              <option value="" disabled selected>Select gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="non-binary">Non-Binary</option>
+              <option value="other">Other</option>
+              <option value="prefer-not">Prefer Not to Say</option>
+            </select>
+          </div>
+          <span class="err-msg" id="e-gender">Please select a gender.</span>
+        </div>
+
+        <div class="field">
+          <label class="lbl" for="mobile">Mobile Number <span class="req">*</span></label>
+          <input type="tel" id="mobile" placeholder="e.g. 9876543210" inputmode="numeric" required/>
+          <span class="hint">Integers only — no spaces or dashes.</span>
+          <span class="err-msg" id="e-mobile">Enter a valid number (7–15 digits).</span>
+        </div>
+
+        <div class="field full">
+          <label class="lbl" for="email">Email Address <span class="req">*</span></label>
+          <input type="email" id="email" placeholder="e.g. patient@email.com" required/>
+          <span class="hint">Your token will be paired with this email address.</span>
+          <span class="err-msg" id="e-email">Enter a valid email address.</span>
+        </div>
+
+        <div class="field full">
+          <label class="lbl" for="address">Address <span class="req">*</span></label>
+          <textarea id="address" placeholder="House / Flat No., Street, City, State, PIN Code" required></textarea>
+          <span class="err-msg" id="e-address">Please enter your address.</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 2: Reason for Visit -->
+    <div class="section">
+      <div class="sec-head">
+        <div class="sec-num">2</div>
+        <div class="sec-title">Reason for Visit</div>
+        <div class="sec-line"></div>
+      </div>
+      <div class="field">
+        <label class="lbl" style="margin-bottom:6px;">Why is the patient visiting? <span class="req">*</span></label>
+        <div class="pill-group">
+          <div class="pill">
+            <input type="radio" name="visitReason" id="r-consult" value="Consultation" required/>
+            <label for="r-consult"><span class="dot"></span>Consultation</label>
+          </div>
+          <div class="pill">
+            <input type="radio" name="visitReason" id="r-treat" value="Treatment"/>
+            <label for="r-treat"><span class="dot"></span>Treatment</label>
+          </div>
+          <div class="pill">
+            <input type="radio" name="visitReason" id="r-followup" value="Follow-Up"/>
+            <label for="r-followup"><span class="dot"></span>Follow-Up</label>
+          </div>
+        </div>
+        <span class="err-msg" id="e-reason" style="margin-top:4px;">Please select a reason for the visit.</span>
+      </div>
+    </div>
+
+    <!-- 3: Bed Rest -->
+    <div class="section">
+      <div class="sec-head">
+        <div class="sec-num">3</div>
+        <div class="sec-title">Current Health Status</div>
+        <div class="sec-line"></div>
+      </div>
+      <div class="field">
+        <label class="lbl" style="margin-bottom:8px;">Is the patient currently on bed rest? <span class="req">*</span></label>
+        <div class="toggle-pair">
+          <div class="tog">
+            <input type="radio" name="bedRest" id="br-yes" value="Yes" required/>
+            <label for="br-yes">
+              <span class="tog-icon">🛏️</span>
+              Yes
+              <span class="tog-sub">Patient is on bed rest</span>
+            </label>
+          </div>
+          <div class="tog">
+            <input type="radio" name="bedRest" id="br-no" value="No"/>
+            <label for="br-no">
+              <span class="tog-icon">🚶</span>
+              No
+              <span class="tog-sub">Able to visit in person</span>
+            </label>
+          </div>
+        </div>
+        <span class="err-msg" id="e-bedrest" style="margin-top:6px;">Please indicate bed rest status.</span>
+      </div>
+    </div>
+
+    <!-- 4: Appointment + Token -->
+    <div class="section">
+      <div class="sec-head">
+        <div class="sec-num">4</div>
+        <div class="sec-title">Appointment &amp; Visit Token</div>
+        <div class="sec-line"></div>
+      </div>
+
+      <div class="token-wrap">
+
+        <!-- Date + Slot -->
+        <div class="appt-date-grid">
+          <div class="field">
+            <label class="lbl" for="appt-date">Appointment Date <span class="req">*</span></label>
+            <input type="date" id="appt-date"/>
+            <span class="err-msg" id="e-appt-date">Please select an appointment date.</span>
+          </div>
+          <div class="field">
+            <label class="lbl" for="appt-slot">Preferred Slot <span class="req">*</span></label>
+            <div class="sel-wrap">
+              <select id="appt-slot">
+                <option value="" disabled selected>Choose slot</option>
+                <option value="Morning (9 AM – 1 PM)">Morning (9 AM – 1 PM)</option>
+                <option value="Afternoon (3 PM – 6 PM)">Afternoon (3 PM – 6 PM)</option>
+              </select>
+            </div>
+            <span class="err-msg" id="e-appt-slot">Please choose a slot.</span>
+          </div>
+        </div>
+
+        <!-- Token Display Card -->
+        <div class="token-card inactive" id="token-card">
+          <div class="token-badge">
+            <div class="token-number" id="token-num">—</div>
+            <div class="token-label-sm">TOKEN</div>
+          </div>
+          <div class="token-meta">
+            <div class="tm-row">Assigned To</div>
+            <div class="tm-val" id="token-email-disp">—</div>
+            <div class="tm-sub" id="token-date-disp">—</div>
+            <div class="token-status s-idle" id="token-status-el">
+              <div class="status-dot"></div>
+              <span id="token-status-txt">Fill in date, slot and email above</span>
+            </div>
+            <div class="taken-warn" id="taken-warn">
+              ℹ This email already holds token #<strong id="taken-num-disp"></strong> for this date.
+            </div>
+          </div>
+        </div>
+
+        <!-- 24-hour reset countdown -->
+        <div class="reset-bar">
+          <div class="reset-bar-left">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.5 5v5.25l4.5 2.67-.75 1.23L11 13V7h1.5z"/></svg>
+            Token counter resets automatically every 24 hours
+          </div>
+          <div class="reset-bar-right">
+            Resets in &nbsp;<span id="countdown-timer">—</span>
+          </div>
+        </div>
+
+        <span class="err-msg" id="e-token">A valid token is required. Please fill in your date, slot and email.</span>
+
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="divider"></div>
+    <button type="submit" class="submit-btn">
+      <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+      <span>Submit Registration</span>
+    </button>
+
+  </form>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+  Registered! Your token is <strong id="toast-token" style="margin-left:4px;color:#2da89a;font-size:1rem;"></strong>
+</div>
+
+<script>
+/* ─────────────────────────────────────────────────────────
+   TOKEN ENGINE
+   Storage key: "ptokens"
+   Schema: { "YYYY-MM-DD": { counter, resetAt, map:{email->no} } }
+───────────────────────────────────────────────────────── */
+const STORE_KEY  = 'ptokens';
+const MAX_TOKENS = 50;
+
+function loadStore() {
+  try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }
+  catch { return {}; }
+}
+function saveStore(s) { localStorage.setItem(STORE_KEY, JSON.stringify(s)); }
+
+function nextMidnight(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  d.setDate(d.getDate() + 1);
+  return d.getTime();
+}
+
+function getOrCreateDay(store, date) {
+  const now = Date.now();
+  if (!store[date] || now >= store[date].resetAt) {
+    store[date] = { counter: 1, resetAt: nextMidnight(date), map: {} };
+  }
+  return store[date];
+}
+
+function assignToken(date, email) {
+  if (!date || !email) return null;
+  const key   = email.toLowerCase().trim();
+  const store = loadStore();
+  const day   = getOrCreateDay(store, date);
+  const exist = day.map[key];
+  if (exist !== undefined) {
+    saveStore(store);
+    return { token: exist, isExisting: true, isFull: day.counter > MAX_TOKENS };
+  }
+  const no = day.counter;
+  day.map[key] = no;
+  day.counter++;
+  saveStore(store);
+  return { token: no, isExisting: false, isFull: no > MAX_TOKENS };
+}
+
+function getResetAt(date) {
+  if (!date) return nextMidnight(new Date().toISOString().split('T')[0]);
+  const store = loadStore();
+  return store[date] ? store[date].resetAt : nextMidnight(date);
+}
+
+/* ─────────────────────────────────────────────────────────
+   DOM REFS
+───────────────────────────────────────────────────────── */
+const apptDateEl   = document.getElementById('appt-date');
+const apptSlotEl   = document.getElementById('appt-slot');
+const emailEl      = document.getElementById('email');
+const tokenCard    = document.getElementById('token-card');
+const tokenNumEl   = document.getElementById('token-num');
+const tokenEmailEl = document.getElementById('token-email-disp');
+const tokenDateEl  = document.getElementById('token-date-disp');
+const tokenStEl    = document.getElementById('token-status-el');
+const tokenStTxt   = document.getElementById('token-status-txt');
+const takenWarn    = document.getElementById('taken-warn');
+const takenNumEl   = document.getElementById('taken-num-disp');
+let assignedToken  = null;
+let countdownTimer = null;
+
+apptDateEl.min = new Date().toISOString().split('T')[0];
+
+function fmtDate(s) {
+  if (!s) return '—';
+  return new Date(s + 'T12:00:00').toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+function setStatus(type, msg) {
+  tokenStEl.className = 'token-status s-' + type;
+  tokenStTxt.textContent = msg;
+}
+
+function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+
+function refreshToken() {
+  const date  = apptDateEl.value;
+  const slot  = apptSlotEl.value;
+  const email = emailEl.value.trim();
+
+  if (!date || !email || !isValidEmail(email)) {
+    tokenCard.classList.add('inactive');
+    tokenNumEl.textContent = '—';
+    tokenEmailEl.textContent = '—';
+    tokenDateEl.textContent = '—';
+    setStatus('idle', 'Fill in date, slot and email above');
+    takenWarn.style.display = 'none';
+    assignedToken = null;
+    return;
+  }
+
+  const result = assignToken(date, email);
+  if (!result) return;
+
+  assignedToken = result.token;
+  tokenCard.classList.remove('inactive');
+
+  // Animate number change
+  tokenNumEl.classList.add('fading');
+  setTimeout(() => {
+    tokenNumEl.textContent = String(result.token).padStart(2, '0');
+    tokenNumEl.classList.remove('fading');
+    tokenEmailEl.textContent = email.toLowerCase();
+    tokenDateEl.textContent  = fmtDate(date) + (slot ? '  ·  ' + slot : '');
+
+    if (result.isFull) {
+      setStatus('warn', 'Slots are full for this date');
+      takenWarn.style.display = 'none';
+    } else if (result.isExisting) {
+      setStatus('taken', 'This email already has a token for this date');
+      takenWarn.style.display = 'block';
+      takenNumEl.textContent  = String(result.token).padStart(2, '0');
+    } else {
+      setStatus('ok', 'Token confirmed & reserved for you');
+      takenWarn.style.display = 'none';
+    }
+  }, 220);
+
+  startCountdown(date);
+}
+
+/* ─── Countdown ─── */
+function startCountdown(date) {
+  clearInterval(countdownTimer);
+  const resetAt = getResetAt(date);
+  const el = document.getElementById('countdown-timer');
+  function tick() {
+    const diff = resetAt - Date.now();
+    if (diff <= 0) { el.textContent = 'Resetting…'; clearInterval(countdownTimer); refreshToken(); return; }
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000)   / 1000);
+    el.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }
+  tick();
+  countdownTimer = setInterval(tick, 1000);
+}
+
+// Bind live updates
+apptDateEl.addEventListener('change', refreshToken);
+apptSlotEl.addEventListener('change', refreshToken);
+emailEl.addEventListener('input',    refreshToken);
+
+// Initial countdown from today
+startCountdown(new Date().toISOString().split('T')[0]);
+
+/* ─── Mobile: numbers only ─── */
+document.getElementById('mobile').addEventListener('input', function() {
+  this.value = this.value.replace(/\D/g, '');
+});
+
+/* ─────────────────────────────────────────────────────────
+   VALIDATION + SUBMIT
+───────────────────────────────────────────────────────── */
+function showErr(id, show) {
+  const el = document.getElementById('e-' + id);
+  if (el) el.style.display = show ? 'block' : 'none';
+}
+function markField(id, bad) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('err-field', bad);
+}
+
+document.getElementById('pForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  let ok = true;
+
+  const nameOk = document.getElementById('fullname').value.trim().length >= 2;
+  showErr('name', !nameOk); markField('fullname', !nameOk);
+  if (!nameOk) ok = false;
+
+  const av = parseInt(document.getElementById('age').value);
+  const ageOk = !isNaN(av) && av >= 0 && av <= 130;
+  showErr('age', !ageOk); markField('age', !ageOk);
+  if (!ageOk) ok = false;
+
+  const gOk = document.getElementById('gender').value !== '';
+  showErr('gender', !gOk); markField('gender', !gOk);
+  if (!gOk) ok = false;
+
+  const mOk = /^[0-9]{7,15}$/.test(document.getElementById('mobile').value.trim());
+  showErr('mobile', !mOk); markField('mobile', !mOk);
+  if (!mOk) ok = false;
+
+  const eOk = isValidEmail(emailEl.value.trim());
+  showErr('email', !eOk); markField('email', !eOk);
+  if (!eOk) ok = false;
+
+  const aOk = document.getElementById('address').value.trim().length >= 5;
+  showErr('address', !aOk); markField('address', !aOk);
+  if (!aOk) ok = false;
+
+  const reasonOk = !!document.querySelector('input[name="visitReason"]:checked');
+  showErr('reason', !reasonOk);
+  if (!reasonOk) ok = false;
+
+  const bedOk = !!document.querySelector('input[name="bedRest"]:checked');
+  showErr('bedrest', !bedOk);
+  if (!bedOk) ok = false;
+
+  const dateOk = apptDateEl.value !== '';
+  showErr('appt-date', !dateOk); markField('appt-date', !dateOk);
+  if (!dateOk) ok = false;
+
+  const slotOk = apptSlotEl.value !== '';
+  showErr('appt-slot', !slotOk); markField('appt-slot', !slotOk);
+  if (!slotOk) ok = false;
+
+  const tokenOk = assignedToken !== null;
+  showErr('token', !tokenOk);
+  if (!tokenOk) ok = false;
+
+  if (ok) {
+    document.getElementById('toast-token').textContent = '#' + String(assignedToken).padStart(2, '0');
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4500);
+    this.reset();
+    assignedToken = null;
+    tokenCard.classList.add('inactive');
+    tokenNumEl.textContent   = '—';
+    tokenEmailEl.textContent = '—';
+    tokenDateEl.textContent  = '—';
+    setStatus('idle', 'Fill in date, slot and email above');
+    takenWarn.style.display = 'none';
+  } else {
+    const first = this.querySelector('.err-field');
+    if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+});
+</script>
+</body>
+</html>

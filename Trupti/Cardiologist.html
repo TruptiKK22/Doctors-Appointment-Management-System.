@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardiologist - Health Prime</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0; padding: 0;
+            background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.8)),
+                url('assets/doctype.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            color: #ffffff;
+        }
+        .back-btn {
+            position: absolute; top: 25px; left: 25px;
+            padding: 10px 17px; border: none; border-radius: 5px;
+            background-color: lightslategrey; font-size: 1rem; cursor: pointer; color: white;
+        }
+        .back-btn:hover { background-color: #ddd; color: #222; }
+        .header-section { padding: 35px 0 10px 0; text-align: center; }
+        h1 {
+            font-size: 2.8rem; font-family: 'Times New Roman', Times, serif;
+            text-transform: uppercase; letter-spacing: 4px; color: #00d4ff; margin: 0;
+        }
+        .content-wrapper { display: flex; justify-content: flex-start; padding: 40px 0 100px 5%; }
+        .doctor-list { display: flex; flex-direction: column; gap: 25px; width: 100%; max-width: 1000px; }
+        .doctor-btn {
+            display: flex; align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 4px; padding: 0; overflow: hidden;
+            transition: all 0.3s ease; cursor: pointer;
+            width: 100%; text-align: left; color: inherit; font-family: inherit; outline: none;
+        }
+        .doctor-btn:hover {
+            background: rgba(0, 212, 255, 0.1); border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2); transform: translateX(10px);
+        }
+        .doctor-btn:active { transform: scale(0.98) translateX(5px); background: rgba(0, 212, 255, 0.2); }
+        .doc-pic { width: 180px; height: 180px; background: #1a2a3a; flex-shrink: 0; }
+        .doc-pic img { width: 100%; height: 100%; object-fit: cover; border-right: 2px solid #00d4ff; display: block; }
+        .doc-info { padding: 20px 30px; flex-grow: 1; }
+        .doc-info h2 { margin: 0 0 12px 0; font-size: 1.6rem; color: #00d4ff; }
+        .doc-info p { margin: 6px 0; font-size: 1rem; color: #e0e0e0; display: flex; }
+        .label { font-weight: bold; width: 100px; color: #ffffff; flex-shrink: 0; }
+        @media (max-width: 850px) {
+            .content-wrapper { justify-content: center; padding: 20px; }
+            .doctor-btn { flex-direction: column; }
+            .doc-pic { width: 100%; height: 200px; }
+            .doc-pic img { border-right: none; border-bottom: 2px solid #00d4ff; }
+        }
+    </style>
+</head>
+<body>
+
+<button class="back-btn" onclick="goBack()">← Back</button>
+
+<div class="header-section">
+    <h1>Cardiologist</h1>
+</div>
+
+<div class="content-wrapper">
+    <div class="doctor-list">
+
+        <!-- DOCTOR 1 -->
+        <button class="doctor-btn" onclick="selectDoctor('Dr. Vikas Patel')">
+            <div class="doc-pic"><img src="assets/doc1.jpg" alt="Doctor Photo"></div>
+            <div class="doc-info">
+                <h2>Dr. Vikas Patel</h2>
+                <p><span class="label">Address:</span><b>HeartCare Hospital,</b> B-17, Andheri West, SV Road, Mumbai, Maharashtra – 400058</p>
+                <p><span class="label">Contact:</span> +91 97654 32109</p>
+            </div>
+        </button>
+
+        <!-- DOCTOR 2 -->
+        <button class="doctor-btn" onclick="selectDoctor('Dr. Bhoomika Gupta')">
+            <div class="doc-pic"><img src="assets/doc2.jpg" alt="Doctor Photo"></div>
+            <div class="doc-info">
+                <h2>Dr. Bhoomika Gupta</h2>
+                <p><span class="label">Address:</span><b>Care & Cure Hospital,</b> 45, Ring Road, Satellite Area, Ahmedabad, Gujarat – 380015</p>
+                <p><span class="label">Contact:</span> +91 91234 56780</p>
+            </div>
+        </button>
+
+        <!-- DOCTOR 3 -->
+        <button class="doctor-btn" onclick="selectDoctor('Dr. Neha Sharma')">
+            <div class="doc-pic"><img src="assets/doc3.jpg" alt="Doctor Photo"></div>
+            <div class="doc-info">
+                <h2>Dr. Neha Sharma</h2>
+                <p><span class="label">Address:</span><b>Healthy Heart Hospital,</b> Plot No. 12, MG Road, Shivajinagar, Pune, Maharashtra – 411005</p>
+                <p><span class="label">Contact:</span> +91 94032 40045</p>
+            </div>
+        </button>
+
+        <!-- DOCTOR 4 -->
+        <button class="doctor-btn" onclick="selectDoctor('Dr. Amit Sharma')">
+            <div class="doc-pic"><img src="assets/doc4.jpg" alt="Doctor Photo"></div>
+            <div class="doc-info">
+                <h2>Dr. Amit Sharma</h2>
+                <p><span class="label">Address:</span><b>New Hope Hospital,</b> 8, Lashkar, Gwalior, Madhya Pradesh – 474001</p>
+                <p><span class="label">Contact:</span> +91 98234 56002</p>
+            </div>
+        </button>
+
+    </div>
+</div>
+
+<script>
+    function selectDoctor(doctorName) {
+        const formUrl = 'CardiologistForm.php?specialist=Cardiologist&doctor=' + encodeURIComponent(doctorName);
+
+        // Pass redirect directly in URL — no fetch, no timing issues
+        window.location.href = 'logout.php?redirect=' + encodeURIComponent(formUrl);
+    }
+
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
+</body>
+</html>

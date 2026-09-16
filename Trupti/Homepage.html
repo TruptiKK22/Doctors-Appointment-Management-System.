@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    </head>
+
+<body>
+     <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:"Poppins", sans-serif;
+        }
+
+        body{
+            background-image: url("assets/dochp.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height:100vh;
+            width:100vw;
+        }
+
+        .header-Container{
+            display:flex;
+            align-items:center;
+            width:100%;
+        }
+
+        .logo{
+            width:160px;
+            height:125px;
+            margin:15px 0 0 10px;
+        }
+
+        .logo-container{
+            font-size:3rem;
+            font-weight:700;
+            color: rgb(6, 64, 71);
+            margin-left:10px;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+
+        .navcontainer{
+            margin-left:auto;
+            padding:20px;
+            margin-right:50px;
+        }
+
+        .navcontainer ul{
+            list-style:none;
+            display:flex;
+            gap:30px;
+        }
+
+        .navcontainer ul li a{
+            text-decoration:none;
+            color:white;
+            font-weight:600;
+            font-size:1.2rem;
+        }
+
+        .content{
+            margin:25px;
+            display:flex;
+            align-items:center;
+            height:50vh;
+            max-width:500px;
+            font-size:3rem;
+            font-weight:700;
+            color:rgb(14, 14, 14);
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .signup-btn{
+            margin-left:25px;
+            padding:12px 50px;
+            font-size:25px;
+            background:transparent;
+            border:2px solid #9fe8ff;
+            color:white;
+            cursor:pointer;
+            box-shadow:0 0 15px rgba(159,232,255,0.6);
+        }
+
+        .signup-btn a{
+            text-decoration:none;
+            color:white;
+        }
+    </style>
+
+    <div class="header-Container">
+        <img class="logo" src="assets/logo.png" alt="Logo">
+        <span class="logo-container">Health Prime</span>
+
+        <div class="navcontainer">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="login.html?from=Homepage.html">Login</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="content">Innovating Health For a Brighter Future</div>
+        <button class="signup-btn">
+            <a href="Doctype.html">Continue</a>
+        </button>
+    </div>
+
+</body>
+</html>
