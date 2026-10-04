@@ -61,12 +61,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     );
 
     if (mysqli_stmt_execute($stmt)) {
+        $new_id = mysqli_stmt_insert_id($stmt);
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
-        echo "<script>
-            alert('Appointment booked! Your token is #" . str_pad($token_number, 2, '0', STR_PAD_LEFT) . "');
-            window.location.href = 'Homepage.html';
-        </script>";
+
+        header("Location: Receipt.php?specialist=Gynecologist&id=" . $new_id);
         exit();
     } else {
         die("Error: " . mysqli_stmt_error($stmt));

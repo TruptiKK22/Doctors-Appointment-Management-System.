@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>
                 alert('Email already registered!');
                 window.location='login.html';
-              </script>";
+            </script>";
         exit();
     }
 
